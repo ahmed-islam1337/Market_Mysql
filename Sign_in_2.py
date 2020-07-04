@@ -20,7 +20,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
 
         #define data model as attribute to optimize the Models request
-        self.model = Models
+        self.model=Models()
 
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(10, 30, 47, 13))
@@ -30,24 +30,26 @@ class Ui_MainWindow(object):
         self.label_2.setGeometry(QtCore.QRect(10, 70, 47, 13))
         self.label_2.setObjectName("label_2")
 
-        #username field
-        self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
-        self.textBrowser.setGeometry(QtCore.QRect(60, 20, 256, 25))
-        self.textBrowser.setObjectName("textBrowser")
-
-        #password field
-        self.textBrowser_2 = QtWidgets.QTextBrowser(self.centralwidget)
-        self.textBrowser_2.setGeometry(QtCore.QRect(60, 60, 256, 25))
-        self.textBrowser_2.setObjectName("textBrowser_2")
 
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(60, 100, 75, 23))
         self.pushButton.setObjectName("pushButton")
         self.pushButton.clicked.connect(self.check_button)
 
+
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_2.setGeometry(QtCore.QRect(210, 100, 75, 23))
         self.pushButton_2.setObjectName("pushButton_2")
+
+        # username field
+        self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit.setGeometry(QtCore.QRect(60, 20, 251, 25))
+        self.textEdit.setObjectName("textEdit")
+
+        # password field
+        self.textEdit_2 = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit_2.setGeometry(QtCore.QRect(60, 60, 251, 25))
+        self.textEdit_2.setObjectName("textEdit_2")
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -69,11 +71,16 @@ class Ui_MainWindow(object):
         self.pushButton.setText(_translate("MainWindow", "check"))
         self.pushButton_2.setText(_translate("MainWindow", "exit"))
 
+    #controler of button
     def check_button(self):
-        username= self.textBrowser.toPlainText()
-        password= self.textBrowser_2.toPlainText()
-        print(self.model.get_user(username,password))
-
+        username= self.textEdit.toPlainText()
+        password= self.textEdit_2.toPlainText()
+        #print(username,password)
+        if self.model.get_user(username,password) != None:
+            #exist value
+            if self.model.get_user(username,password)[0] == 'admin':
+                #username is admin so go to admin page
+                print(self.model.get_user(username,password))
 
 
 if __name__ == "__main__":
